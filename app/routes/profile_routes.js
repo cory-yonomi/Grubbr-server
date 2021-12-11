@@ -5,10 +5,6 @@ const crypto = require('crypto')
 const passport = require('passport')
 // bcrypt docs: https://github.com/kelektiv/node.bcrypt.js
 const bcrypt = require('bcrypt')
-
-
-
-
 // pull in error types and the logic to handle them and set status codes
 const errors = require('../../lib/custom_errors')
 
@@ -22,12 +18,20 @@ const User = require('../models/user')
 // it will also set `res.user`
 const requireToken = passport.authenticate('bearer', { session: false })
 
+const removeBlanks = require('../../lib/remove_blank_fields')
+
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
 // READ user's profile
 router.get('/profile', requireToken, (req, res, next) => {
-    res.json(req.user._id)
+    Profile.findOne({
+        userId: req.user._id
+    })
+        .then(foundProfile => {
+        res.json(foundProfile)
+        })
+    .catch(err => console.err(err))
 })
 
 // CREATE user's profile
@@ -42,6 +46,21 @@ router.post('/profile', requireToken, (req, res, next) => {
             res.json(createdProfile)
         })
         .catch(err => console.err(err))
+})
+
+// EDIT edit user's profile
+router.patch('/profile/:profileId', requireToken, removeBlanks, (req, res, next) => {
+    Profile.findOne({
+        _id: req.params.profileId
+    })
+        .then(foundProfile => {
+        console.log(foundProfile)
+        return foundProfile.updateOne(req.body)
+        })
+        .then(resp => {
+            res.json(resp)
+        })
+    .catch(err => console.log(err))
 })
 
 module.exports = router

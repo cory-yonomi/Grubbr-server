@@ -20,6 +20,7 @@ const profileSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    bio: String,
     photo: String,
     liked: Array,
     visited: Array,
