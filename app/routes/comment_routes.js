@@ -1,19 +1,24 @@
 const express = require('express')
+// jsonwebtoken docs: https://github.com/auth0/node-jsonwebtoken
+const crypto = require('crypto')
+// Passport docs: http://www.passportjs.org/docs/
+const passport = require('passport')
+// bcrypt docs: https://github.com/kelektiv/node.bcrypt.js
+const bcrypt = require('bcrypt')
+// pull in error types and the logic to handle them and set status codes
+const errors = require('../../lib/custom_errors')
 
-// Mongoose models
+const BadParamsError = errors.BadParamsError
+const BadCredentialsError = errors.BadCredentialsError
 const Restaurant = require('../models/Restaurant')
+const User = require('../models/user')
 
-// throws custom error
-const customErrors = require('../../lib/custom_errors')
-
-// sends 404 when non-existent document is requested
-const handle404 = customErrors.handle404
-
-// this is middleware that will remove blank fields from `req.body`, e.g.
-// { person: { title: '', text: 'foo' } } -> { person: { text: 'foo' } }
-const removeBlanks = require('../../lib/remove_blank_fields')
-
+// passing this as a second argument to `router.<verb>` will make it
+// so that a token MUST be passed for that route to be available
+// it will also set `res.user`
 const requireToken = passport.authenticate('bearer', { session: false })
+
+const removeBlanks = require('../../lib/remove_blank_fields')
 
 // instantiates router
 const router = express.Router()
