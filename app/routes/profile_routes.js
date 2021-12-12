@@ -63,4 +63,17 @@ router.patch('/profile/:profileId', requireToken, removeBlanks, (req, res, next)
     .catch(err => console.log(err))
 })
 
+// DELETE a profile
+router.delete('/profile/:profileId', requireToken, (req, res, next) => {
+    Profile.findOne({
+        _id: req.params.profileId,
+    })
+        .then(foundProfile => {
+        return foundProfile.deleteOne()
+        })
+        .then(() => res.sendStatus(204))
+        // if error => throw to handler
+        .catch(next)
+})
+
 module.exports = router
