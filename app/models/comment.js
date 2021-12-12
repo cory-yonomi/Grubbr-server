@@ -10,7 +10,7 @@ const commentSchema = new Schema(
             type: Schema.Types.ObjectId,
             // ref is also needed, so we can populate the owner
             // Note: populate means replacing the owner id with the Person document
-            ref: 'Profile'
+            ref: 'User'
         }
     },
     {
