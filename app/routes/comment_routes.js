@@ -54,4 +54,17 @@ router.post('/comments/:restaurantId', requireToken, (req, res, next) => {
         .catch(next)
 })
 
+//DELETE
+//DELETE /comments/<restaurant.id>/<comment.id>
+router.delete('/comments/:restaurantId/:commentId', requireToken, (req, res, next) => {
+    Comment.findById(req.params.commentId)
+        .then(handle404)
+        .then(comment => {
+        // if there are no errors, delete the selected comment
+        comment.deleteOne()
+        })
+        .then(() => res.sendStatus(204))
+    .catch(next)
+})
+
 module.exports = router

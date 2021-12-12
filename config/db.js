@@ -5,7 +5,6 @@
 
 const mongooseBaseName = 'grubbr'
 
-
 // create the mongodb uri for development and test
 const database = {
 	development: `mongodb://localhost/${mongooseBaseName}-development`,
