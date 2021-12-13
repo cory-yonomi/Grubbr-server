@@ -6,10 +6,10 @@ const passport = require('passport')
 // bcrypt docs: https://github.com/kelektiv/node.bcrypt.js
 const bcrypt = require('bcrypt')
 // pull in error types and the logic to handle them and set status codes
-const errors = require('../../lib/custom_errors')
+const customErrors = require('../../lib/custom_errors')
 
-const BadParamsError = errors.BadParamsError
-const BadCredentialsError = errors.BadCredentialsError
+const BadParamsError = customErrors.BadParamsError
+const BadCredentialsError = customErrors.BadCredentialsError
 const Profile = require('../models/profile')
 const User = require('../models/user')
 
@@ -20,6 +20,7 @@ const requireToken = passport.authenticate('bearer', { session: false })
 
 const removeBlanks = require('../../lib/remove_blank_fields')
 
+const handle404 = customErrors.handle404
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
@@ -28,6 +29,7 @@ router.get('/profile', requireToken, (req, res, next) => {
     Profile.findOne({
         userId: req.user._id
     })
+        .then(handle404)
         .then(foundProfile => {
         res.json(foundProfile)
         })
@@ -42,6 +44,7 @@ router.post('/profile', requireToken, (req, res, next) => {
         lastName: req.body.lastName,
         zipCode: req.body.zipCode
     })
+        .then(handle404)
         .then(createdProfile => {
             res.json(createdProfile)
         })
@@ -53,6 +56,7 @@ router.patch('/profile/:profileId', requireToken, removeBlanks, (req, res, next)
     Profile.findOne({
         _id: req.params.profileId
     })
+        .then(handle404)
         .then(foundProfile => {
         console.log(foundProfile)
         return foundProfile.updateOne(req.body)
@@ -68,6 +72,7 @@ router.delete('/profile/:profileId', requireToken, (req, res, next) => {
     Profile.findOne({
         _id: req.params.profileId,
     })
+        .then(handle404)
         .then(foundProfile => {
         return foundProfile.deleteOne()
         })

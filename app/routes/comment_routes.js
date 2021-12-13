@@ -23,7 +23,18 @@ const removeBlanks = require('../../lib/remove_blank_fields')
 // instantiates router
 const router = express.Router()
 
-// GET (SHOW)
+//GET all comments
+router.get('/comments/:restaurantId', requireToken, (req, res, next) => {
+    Restaurant.findById(req.params.restaurantId)
+        .then(restaurant => {
+            //here we can select the comment by its id using a built in function
+            return restaurant.comments
+        })
+        .then(comments => res.status(200).json(comments))
+        .catch(next)
+})
+
+// GET one comment
 // GET /comments/<restaurant._id>/<comment._id>
 router.get('/comments/:restaurantId/:commentId', requireToken, (req, res, next) => {
     Restaurant.findById(req.params.restaurantId)
