@@ -29,7 +29,7 @@ const router = express.Router()
 router.get('/restaurants/Yelp/:zipCode', requireToken, (req, res, next) => { 
     axios(`https://api.yelp.com/v3/businesses/search?location=${req.params.zipCode}&categories=restaurants`, {
         headers: {
-            "Authorization": `Bearer ${process.env.API_KEY}`
+            "Authorization": `Bearer UNUrReNjSEcIeomUzJ2YFJxh7CBkdecx-_0aZWHfp09JPxftCyIMUTW3DUCTd3J4KleOAlwpQ-5uxB-MzUe63K9rFQttFaLkYRFCj7SFamm5s109Q6S9dmatIly1YXYx`
             // "Access-Control-Allow-Origin":"*",
             // "Access-Control-Allow-Credentials": true,
             // "Access-Control-Allow-Methods": "GET",
