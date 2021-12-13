@@ -11,7 +11,7 @@ const axios = require('axios')
 
 const BadParamsError = errors.BadParamsError
 const BadCredentialsError = errors.BadCredentialsError
-const Restaurant = require('../models/Restaurant')
+const Restaurant = require('../models/restaurant')
 const User = require('../models/user')
 
 

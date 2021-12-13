@@ -10,7 +10,7 @@ const errors = require('../../lib/custom_errors')
 
 const BadParamsError = errors.BadParamsError
 const BadCredentialsError = errors.BadCredentialsError
-const Restaurant = require('../models/Restaurant')
+const Restaurant = require('../models/restaurant')
 const User = require('../models/user')
 
 // passing this as a second argument to `router.<verb>` will make it
