@@ -73,8 +73,6 @@ router.get('/restaurants', requireToken, (req, res, next) => {
 // create a restaurant if it doesn't already exist
 router.post('/restaurants', requireToken, (req, res, next) => {
     Restaurant.findOneAndUpdate({
-        name: req.body.name,
-        location: req.body.location,
         yelpId: req.body.yelpId,
     },
         { $set: {
@@ -83,7 +81,7 @@ router.post('/restaurants', requireToken, (req, res, next) => {
         yelpId: req.body.yelpId,
         comments: []
     }},
-        { upsert: true })
+        { new: true, upsert: true })
         .then(createdRest => {
         res.json(createdRest)
         })
