@@ -12,7 +12,7 @@ const restaurantSchema = new Schema({
         required: true,
     },
     location: {
-        type: String,
+        type: Array,
         required: true
     },
     comments: [commentSchema],

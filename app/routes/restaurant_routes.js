@@ -76,21 +76,27 @@ router.post('/restaurants', requireToken, (req, res, next) => {
         name: req.body.name,
         location: req.body.location,
         yelpId: req.body.yelpId,
-        comments: [],
-        users: []
     },
         { $set: {
         name: req.body.name,
         location: req.body.location,
         yelpId: req.body.yelpId,
-        comments: [],
-        users: []
+        comments: []
     }},
         { upsert: true })
         .then(createdRest => {
         res.json(createdRest)
         })
         .catch(next)
+    // Restaurant.findOneAndUpdate({
+    //     name: req.body.name,
+    //     location: req.body.location,
+    //     yelpId: req.body.yelpId,
+    //     comments: [],
+    //     users: [req.user._id]
+    // }).then(createdRest => {
+    //    console.log(createdRest)
+    // })
 })
 
 // delete a restaurant
