@@ -29,7 +29,7 @@ const router = express.Router()
 router.get('/restaurants/Yelp/:zipCode', requireToken, (req, res, next) => { 
     axios(`https://api.yelp.com/v3/businesses/search?location=${req.params.zipCode}&categories=restaurants`, {
         headers: {
-            "Authorization": `Bearer ${process.env.API_KEY}`
+            "Authorization": `Bearer U4Q48Uepg5PTsphW2fvdiGgCwHpmuamF-4GZxM8J-FbjqH8g5zobhiSylXz_BYdL6YoyC-sAqNvljaeo3t8-RfEo8ZSDgqO9OX0aYpd8kAv8vBVTppzfnDVgBrSyYXYx`
             // "Access-Control-Allow-Origin":"*",
             // "Access-Control-Allow-Credentials": true,
             // "Access-Control-Allow-Methods": "GET",
@@ -77,14 +77,16 @@ router.post('/restaurants', requireToken, (req, res, next) => {
         location: req.body.location,
         yelpId: req.body.yelpId,
         comments: [],
-        users: []
+        users: [],
+        photos: req.body.photos
     },
         { $set: {
         name: req.body.name,
         location: req.body.location,
         yelpId: req.body.yelpId,
         comments: [],
-        users: []
+        users: [],
+        photos: req.body.photos
     }},
         { upsert: true })
         .then(createdRest => {
