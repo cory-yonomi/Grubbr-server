@@ -10,9 +10,10 @@ const restaurantSchema = new Schema({
     yelpId: {
         type: String,
         required: true,
+        unique: true
     },
     location: {
-        type: String,
+        type: Array,
         required: true
     },
     comments: [commentSchema],
