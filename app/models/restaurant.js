@@ -19,6 +19,10 @@ const restaurantSchema = new Schema({
         type: Array,
         required: true
     },
+    image_url: String,
+    categories: Array,
+    rating: Number,
+    price: String,
     comments: [commentSchema],
     users: Array,
 })
