@@ -95,6 +95,10 @@ router.post('/restaurants', requireToken, (req, res, next) => {
             } else {
                 // console.log(resp)
                 // create a new restaurant with the current user in the users array
+                // remove unneccesary information from and simplify categories array
+                let categories = req.body.categories.map(cat => {
+                    return cat.title
+                })
                 return Restaurant.create({
                     name: req.body.name,
                     location: req.body.location,
@@ -103,7 +107,7 @@ router.post('/restaurants', requireToken, (req, res, next) => {
                     image_url: req.body.image,
                     rating: req.body.rating,
                     price: req.body.price,
-                    categories: req.body.categories,
+                    categories: categories,
                     users: [req.user._id]
                 })
             }
