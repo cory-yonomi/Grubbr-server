@@ -11,7 +11,7 @@ const axios = require('axios')
 
 const BadParamsError = errors.BadParamsError
 const BadCredentialsError = errors.BadCredentialsError
-const Restaurant = require('../models/Restaurant')
+const Restaurant = require('../models/restaurant')
 const User = require('../models/user')
 
 
@@ -37,7 +37,7 @@ const router = express.Router()
 router.get('/restaurants/Yelp/:zipCode', requireToken, (req, res, next) => { 
     axios(`https://api.yelp.com/v3/businesses/search?location=${req.params.zipCode}&categories=restaurants`, {
         headers: {
-            "Authorization": `Bearer ${process.env.API_KEY}`
+            "Authorization": `Bearer U4Q48Uepg5PTsphW2fvdiGgCwHpmuamF-4GZxM8J-FbjqH8g5zobhiSylXz_BYdL6YoyC-sAqNvljaeo3t8-RfEo8ZSDgqO9OX0aYpd8kAv8vBVTppzfnDVgBrSyYXYx`
             // "Access-Control-Allow-Origin":"*",
             // "Access-Control-Allow-Credentials": true,
             // "Access-Control-Allow-Methods": "GET",
@@ -95,6 +95,10 @@ router.post('/restaurants', requireToken, (req, res, next) => {
             } else {
                 // console.log(resp)
                 // create a new restaurant with the current user in the users array
+                // remove unneccesary information from and simplify categories array
+                let categories = req.body.categories.map(cat => {
+                    return cat.title
+                })
                 return Restaurant.create({
                     name: req.body.name,
                     location: req.body.location,
@@ -103,7 +107,7 @@ router.post('/restaurants', requireToken, (req, res, next) => {
                     image_url: req.body.image,
                     rating: req.body.rating,
                     price: req.body.price,
-                    categories: req.body.categories,
+                    categories: categories,
                     users: [req.user._id]
                 })
             }
