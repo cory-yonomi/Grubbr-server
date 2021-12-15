@@ -10,14 +10,8 @@ const errors = require('../../lib/custom_errors')
 
 const BadParamsError = errors.BadParamsError
 const BadCredentialsError = errors.BadCredentialsError
-<<<<<<< HEAD
 const Restaurant = require('../models/restaurant')
 const Comment = require('../models/comment')
-=======
-const Restaurant = require('../models/Restaurant')
-const Comment = require('../models/Restaurant')
->>>>>>> 4685243ce0716d941a57658bd020cf9874687b24
-const User = require('../models/user')
 
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
