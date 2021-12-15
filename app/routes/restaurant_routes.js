@@ -72,31 +72,31 @@ router.get('/restaurants', requireToken, (req, res, next) => {
 
 // create a restaurant if it doesn't already exist
 router.post('/restaurants', requireToken, (req, res, next) => {
+    // finds one restaurant by it's yelp id
     Restaurant.findOne({
         yelpId: req.body.yelpId,
     })
         .then(resp => {
+            // if it already exists in the grubbr db
             if (resp) {
-                let userArray =  resp.users.push(req.user._id)
-                Restaurant.findOneAndUpdate({
-                    yelpId: req.body.yelpId
-                },
-                    { $set: {
-                    users: userArray
-                        }
-                    })
+                // console.log(resp)
+                // add the current user who is liking it to the restaurants user array
+                resp.users.push(req.user._id)
+                return resp.save()
+            // if it doesn't already exist
             } else {
-                console.log('no dice')
-        }
-    })
-    
-        // { upsert: true })
-        // .then(createdRest => {
-        //     console.log(createdRest.users)
-        //     // let userArray = createdRest.users.push(req.user.id)
-        //     Restaurant.updateOne({yelpId: req.body.yelpId}, { users: [createdRest.users, req.user._id]})
-        // })
-        // .catch(next)
+                // console.log(resp)
+                // create a new restaurant with the current user in the users array
+                return Restaurant.create({
+                    name: req.body.name,
+                    location: req.body.location,
+                    yelpId: req.body.yelpId,
+                    comments: [],
+                    users: [req.user._id]
+                })
+            }
+    }).then(restaurant => res.status(200).json(restaurant))
+    .catch(next)
 })
 
 // delete a restaurant
