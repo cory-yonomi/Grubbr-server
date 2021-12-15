@@ -20,7 +20,6 @@ const restaurantSchema = new Schema({
     categories: Array,
     rating: Number,
     price: String,
-    distance: Number,
     comments: [commentSchema],
     users: Array,
 })
