@@ -10,9 +10,8 @@ const errors = require('../../lib/custom_errors')
 
 const BadParamsError = errors.BadParamsError
 const BadCredentialsError = errors.BadCredentialsError
-const Restaurant = require('../models/Restaurant')
-const Comment = require('../models/Restaurant')
-const User = require('../models/user')
+const Restaurant = require('../models/restaurant')
+const Comment = require('../models/comment')
 
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
@@ -60,7 +59,7 @@ router.post('/comments/:restaurantId', requireToken, (req, res, next) => {
         })
         .then(restaurant => {
             // return the restaurant and send the status with json
-            res.status(201).json({ restaurant: restaurant.toObject()})
+            res.status(201).json({ restaurant: restaurant.toObject() })
         })
         // if any errors happen, send them to the handler
         .catch(next)
@@ -69,14 +68,17 @@ router.post('/comments/:restaurantId', requireToken, (req, res, next) => {
 //DELETE
 //DELETE /comments/<restaurant.id>/<comment.id>
 router.delete('/comments/:restaurantId/:commentId', requireToken, (req, res, next) => {
-    Comments.findById(req.params.commentId)
-        .then(handle404)
-        .then(comment => {
-        // if there are no errors, delete the selected comment
-        comment.deleteOne()
+    Restaurant.findById(req.params.restaurantId)
+        // .then(handle404)
+        .then(restaurant => {
+            let commentIndex = restaurant.comments.indexOf(req.params.commentId)
+            restaurant.comments.splice(commentIndex, 1)
+            return restaurant.save()
         })
-        .then(() => res.sendStatus(204))
-    .catch(next)
+        .then(restaurant => {
+            res.sendStatus(204)
+        })
+        .catch(next)
 })
 
 module.exports = router
