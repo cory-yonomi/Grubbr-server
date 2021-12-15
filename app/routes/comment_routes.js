@@ -11,6 +11,7 @@ const errors = require('../../lib/custom_errors')
 const BadParamsError = errors.BadParamsError
 const BadCredentialsError = errors.BadCredentialsError
 const Restaurant = require('../models/Restaurant')
+const Comment = require('../models/Restaurant')
 const User = require('../models/user')
 
 // passing this as a second argument to `router.<verb>` will make it
@@ -42,7 +43,7 @@ router.get('/comments/:restaurantId/:commentId', requireToken, (req, res, next) 
             //here we can select the comment by its id using a built in function
             return restaurant.comments.id(req.params.commentId)
         })
-        .then(comment => res.status(200).json(comment.toJSON()))
+        .then(comment => res.status(200).json(comment))
         .catch(next)
 })
 
@@ -68,7 +69,7 @@ router.post('/comments/:restaurantId', requireToken, (req, res, next) => {
 //DELETE
 //DELETE /comments/<restaurant.id>/<comment.id>
 router.delete('/comments/:restaurantId/:commentId', requireToken, (req, res, next) => {
-    Comment.findById(req.params.commentId)
+    Comments.findById(req.params.commentId)
         .then(handle404)
         .then(comment => {
         // if there are no errors, delete the selected comment
