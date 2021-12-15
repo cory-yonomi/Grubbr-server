@@ -100,6 +100,10 @@ router.post('/restaurants', requireToken, (req, res, next) => {
                     location: req.body.location,
                     yelpId: req.body.yelpId,
                     comments: [],
+                    image_url: req.body.image,
+                    rating: req.body.rating,
+                    price: req.body.price,
+                    categories: req.body.categories,
                     users: [req.user._id]
                 })
             }
