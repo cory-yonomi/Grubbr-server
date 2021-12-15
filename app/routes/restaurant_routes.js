@@ -25,6 +25,14 @@ const removeBlanks = require('../../lib/remove_blank_fields')
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
+// const profileUpdateRequest = (userId) => {
+//     return  axios.post(`http://localhost:8000/profile/${userId}`)
+// }
+
+// const restFindByYelp = (yelpId) => {
+//     return 
+// }
+
 // API call for just zip
 router.get('/restaurants/Yelp/:zipCode', requireToken, (req, res, next) => { 
     axios(`https://api.yelp.com/v3/businesses/search?location=${req.params.zipCode}&categories=restaurants`, {
