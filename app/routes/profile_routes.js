@@ -62,9 +62,9 @@ router.post('/profile', requireToken, (req, res, next) => {
 })
 
 // EDIT edit user's profile
-router.patch('/profile/:profileId', requireToken, removeBlanks, (req, res, next) => {
+router.patch('/profile/:userId', requireToken, removeBlanks, (req, res, next) => {
     Profile.findOne({
-        _id: req.params.profileId
+        _id: req.params.userId
     })
         .then(handle404)
         .then(foundProfile => {
@@ -78,9 +78,9 @@ router.patch('/profile/:profileId', requireToken, removeBlanks, (req, res, next)
 })
 
 // DELETE a profile
-router.delete('/profile/:profileId', requireToken, (req, res, next) => {
+router.delete('/profile/:userId', requireToken, (req, res, next) => {
     Profile.findOne({
-        _id: req.params.profileId,
+        _id: req.params.userId,
     })
         .then(handle404)
         .then(foundProfile => {
