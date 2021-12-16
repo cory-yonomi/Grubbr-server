@@ -25,15 +25,15 @@ const handle404 = customErrors.handle404
 const router = express.Router()
 
 // READ user's profile
-router.get('/profile', requireToken, (req, res, next) => {
+router.get('/profile/:userId', requireToken, (req, res, next) => {
     Profile.findOne({
-        userId: req.user._id
+        userId: req.params.userId
     })
         .then(handle404)
         .then(foundProfile => {
         res.json(foundProfile)
         })
-    .catch(err => console.err(err))
+    .catch(next)
 })
 
 // CREATE user's profile
