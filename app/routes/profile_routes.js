@@ -98,7 +98,7 @@ router.patch('/profile/:userId/liked', requireToken, (req, res, next) => {
 // DELETE a profile
 router.delete('/profile/:userId', requireToken, (req, res, next) => {
     Profile.findOne({
-        _id: req.params.userId,
+        userId: req.user._id
     })
         .then(handle404)
         .then(foundProfile => {
