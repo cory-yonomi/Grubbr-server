@@ -62,8 +62,20 @@ router.post('/profile', requireToken, (req, res, next) => {
         .catch(err => console.log(err))
 })
 
-// EDIT edit user's profile
-router.patch('/profile/:userId/liked', requireToken, removeBlanks, (req, res, next) => {
+// EDIT user's profile
+router.patch('/profile/:userId', requireToken, removeBlanks, (req, res, next) => {
+    Profile.findOneAndUpdate({userId: req.user._id},
+        req.body
+    )
+        .then(handle404)
+        .then(resp => {
+            res.json(resp)
+        })
+    .catch(next)
+})
+
+// EDIT edit user's liked restaurants
+router.patch('/profile/:userId/liked', requireToken, (req, res, next) => {
     Profile.findOne({
         userId: req.user._id
 
