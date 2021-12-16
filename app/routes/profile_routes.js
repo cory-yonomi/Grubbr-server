@@ -63,7 +63,7 @@ router.post('/profile', requireToken, (req, res, next) => {
 })
 
 // EDIT edit user's profile
-router.patch('/profile/:userId', requireToken, removeBlanks, (req, res, next) => {
+router.patch('/profile/:userId/liked', requireToken, removeBlanks, (req, res, next) => {
     Profile.findOne({
         userId: req.user._id
 
