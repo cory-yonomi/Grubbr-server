@@ -19,21 +19,32 @@ const User = require('../models/user')
 const requireToken = passport.authenticate('bearer', { session: false })
 
 const removeBlanks = require('../../lib/remove_blank_fields')
+const { json } = require('express/lib/response')
 
 const handle404 = customErrors.handle404
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
-// READ user's profile
+// READ ALL users profile
 router.get('/profile', requireToken, (req, res, next) => {
+    Profile.find({})
+        .then(handle404)
+        .then(foundProfile => {
+        res.json(foundProfile)
+        })
+    .catch(err => console.log(err))
+})
+
+// READ ONE users profile
+router.get('/profile/:userId', requireToken, (req, res, next) => {
     Profile.findOne({
-        userId: req.user._id
+        userId: req.params.userId
     })
         .then(handle404)
         .then(foundProfile => {
         res.json(foundProfile)
         })
-    .catch(err => console.err(err))
+    .catch(err => console.log(err))
 })
 
 // CREATE user's profile
@@ -48,18 +59,23 @@ router.post('/profile', requireToken, (req, res, next) => {
         .then(createdProfile => {
             res.json(createdProfile)
         })
-        .catch(err => console.err(err))
+        .catch(err => console.log(err))
 })
 
 // EDIT edit user's profile
-router.patch('/profile/:profileId', requireToken, removeBlanks, (req, res, next) => {
+router.patch('/profile/:userId', requireToken, removeBlanks, (req, res, next) => {
     Profile.findOne({
-        _id: req.params.profileId
+        userId: req.user._id
+
     })
         .then(handle404)
         .then(foundProfile => {
-        console.log(foundProfile)
-        return foundProfile.updateOne(req.body)
+            if (foundProfile.liked.includes(req.body.restaurant)) {
+                return 'Restaurant already exists, redirect'
+            } else {
+                foundProfile.liked.push(req.body.restaurant)
+                return foundProfile.save()
+            }
         })
         .then(resp => {
             res.json(resp)
@@ -68,9 +84,9 @@ router.patch('/profile/:profileId', requireToken, removeBlanks, (req, res, next)
 })
 
 // DELETE a profile
-router.delete('/profile/:profileId', requireToken, (req, res, next) => {
+router.delete('/profile/:userId', requireToken, (req, res, next) => {
     Profile.findOne({
-        _id: req.params.profileId,
+        _id: req.params.userId,
     })
         .then(handle404)
         .then(foundProfile => {
