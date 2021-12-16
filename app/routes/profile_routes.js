@@ -19,6 +19,7 @@ const User = require('../models/user')
 const requireToken = passport.authenticate('bearer', { session: false })
 
 const removeBlanks = require('../../lib/remove_blank_fields')
+const { json } = require('express/lib/response')
 
 const handle404 = customErrors.handle404
 // instantiate a router (mini app that only handles routes)
@@ -35,9 +36,9 @@ router.get('/profile', requireToken, (req, res, next) => {
 })
 
 // READ ONE users profile
-router.get('/profile/:profileId', requireToken, (req, res, next) => {
+router.get('/profile/:userId', requireToken, (req, res, next) => {
     Profile.findOne({
-        userId: req.params.userId
+        userId: req.user._id
     })
         .then(handle404)
         .then(foundProfile => {
@@ -64,12 +65,16 @@ router.post('/profile', requireToken, (req, res, next) => {
 // EDIT edit user's profile
 router.patch('/profile/:profileId', requireToken, removeBlanks, (req, res, next) => {
     Profile.findOne({
-        _id: req.params.profileId
+        userId: req.user._id
     })
         .then(handle404)
         .then(foundProfile => {
-        console.log(foundProfile)
-        return foundProfile.updateOne(req.body)
+            if (foundProfile.liked.includes(req.body.restaurant)) {
+                return 'Restaurant already exists, redirect'
+            } else {
+                foundProfile.liked.push(req.body.restaurant)
+                return foundProfile.save()
+            }
         })
         .then(resp => {
             res.json(resp)
