@@ -35,9 +35,9 @@ router.get('/profile', requireToken, (req, res, next) => {
 })
 
 // READ ONE users profile
-router.get('/profile/:profileId', requireToken, (req, res, next) => {
+router.get('/profile/:userId', requireToken, (req, res, next) => {
     Profile.findOne({
-        userId: req.user._id
+        userId: req.params.userId
     })
         .then(handle404)
         .then(foundProfile => {
