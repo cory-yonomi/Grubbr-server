@@ -24,8 +24,18 @@ const handle404 = customErrors.handle404
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
-// READ user's profile
-router.get('/profile/:userId', requireToken, (req, res, next) => {
+// READ ALL users profile
+router.get('/profile', requireToken, (req, res, next) => {
+    Profile.find({})
+        .then(handle404)
+        .then(foundProfile => {
+        res.json(foundProfile)
+        })
+    .catch(err => console.log(err))
+})
+
+// READ ONE users profile
+router.get('/profile/:profileId', requireToken, (req, res, next) => {
     Profile.findOne({
         userId: req.params.userId
     })
@@ -33,7 +43,7 @@ router.get('/profile/:userId', requireToken, (req, res, next) => {
         .then(foundProfile => {
         res.json(foundProfile)
         })
-    .catch(next)
+    .catch(err => console.log(err))
 })
 
 // CREATE user's profile
@@ -48,7 +58,7 @@ router.post('/profile', requireToken, (req, res, next) => {
         .then(createdProfile => {
             res.json(createdProfile)
         })
-        .catch(err => console.err(err))
+        .catch(err => console.log(err))
 })
 
 // EDIT edit user's profile
