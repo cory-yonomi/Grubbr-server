@@ -16,7 +16,7 @@ When “Restaurant goers” can’t decide what they want to eat, Grubbr can hel
 The User: Anyone who likes to go to restaurants, especially people who like to try new restaurants and also needs a date, either a friend or a romantic one.
 Well, have you ever been with a partner/friend and you get into an argument because you both cant figure out what to eat? Grubbr can help people make friends based on the same types of restaurants they like.
 
-## Grubbr Models
+## Grubbr Models (ERD)
 
 ![Screen Shot 2021-12-17 at 12 18 15 PM](https://user-images.githubusercontent.com/78924263/146583008-856e0a5e-3053-471d-a2ef-ef47324a08ec.png)
 
@@ -24,8 +24,9 @@ Well, have you ever been with a partner/friend and you get into an argument beca
 
 ![Grubber Routes](https://s12.aconvert.com/convert/p3r68-cdx67/tichk-7ucsp.png)
 
-
-
+## Resources
+- Grubbr's Client GitHub Repo
+https://github.com/ornery-mouse/Grubbr-client
 
 # Authentication
 
