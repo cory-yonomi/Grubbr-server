@@ -1,71 +1,33 @@
-# express-auth-template
+# Grubbr
 
-A template for starting projects with `express` as an API. Includes
-authentication and common middlewares.
+## Team name
+Da Grubbrs Band
 
-## Installation
+## Each team member's assigned role
+- Cory Sorel - Turtle - Creating API and Linking Restaurants, Backend, React
+- Lindsay  Haigh- Llama- Back End, Routes, React, Routes
+- Eduardo Ferreira - Liger - Front End, React
+- Anais Veras - Zoo Keeper - Front End, Wireframe, READme, R
 
-1. [Download](../../archive/master.zip) this template.
-1. Move the .zip file to your `sei/projects/` directory and Unzip it (creating a
-   folder) -- **NOTE:** if the folder was already unzipped, use the `mv` command
-   line to move it to the `sei/projects/` directory.
-1. Rename the directory from express-auth-template -> your-app-name.
-1. Empty [`README.md`](README.md) and fill with your own content.
-1. Move into the new project and `git init`.
-1. Replace all instances of `'express-auth-template'` with your app name.
-1. Install dependencies with `npm install`.
-1. Ensure that you have `nodemon` installed by running `npm install -g nodemon`.
-2. Once everything is working, make an initial commit.
+## Elevator Pitch
+When “Restaurant goers” can’t decide what they want to eat, Grubbr can help them swipe through restaurants nearby or in searched cities with your friends. The user will be able to add friends that have common restaurants and start chatting or set up a date!
 
-## Structure
+## User Stories
+The User: Anyone who likes to go to restaurants, especially people who like to try new restaurants and also needs a date, either a friend or a romantic one.
+Well, have you ever been with a partner/friend and you get into an argument because you both cant figure out what to eat? Grubbr can help people make friends based on the same types of restaurants they like.
 
-Dependencies are stored in [`package.json`](package.json).
+## Grubbr Models
 
-The most important file for understanding the structure of the template is
-`server.js`. This is where the actual Express `app` object is created, where
-the middlewares and routes are registered, and more. To register a routefile,
-follow the pattern established here with `exampleRoutes` and `userRoutes`. If
-you want to add any middlewares to your app, do that here.
+![Screen Shot 2021-12-17 at 12 18 15 PM](https://user-images.githubusercontent.com/78924263/146583008-856e0a5e-3053-471d-a2ef-ef47324a08ec.png)
 
-The `app` directory contains models and route files. Models are simply Mongoose
-models. To create your own, follow the patterns established in
-`app/models/example.js`. Route files are somewhat similar to controllers in
-Rails, but they cover more functionality, including serialization and deciding
-which HTTP verbs to accept and what to do with them.
+## Grubbr Routes
 
-The `config` directory holds just `db.js`, which is where you specify the name
-and URL of your database.
 
-The `lib` directory is for code that will be used in other places in the
-application. The token authentication code is stored in `lib/auth.js`. The
-other files in `lib` deal with error handling. `custom_errors.js` is where all
-the different custom classes of errors are created. If you need some other kind
-of error message, you can add it here. There are also some functions defined
-here that are used elsewhere to check for errors. `lib/error_handler.js` is a
-function that will be used in all your `.catch`es. It catches errors, and sets
-the response status code based on what type of error got thrown.
+# Authentication
 
-You probably will only need to interact with files in `app/models`,
-`app/routes`, and `server.js`. You'll need to edit `db/config.js` just once,
-to change the name of your app.
+### Authentication Routes
 
-## API
-
-Use this as the basis for your own API documentation. Add a new third-level
-heading for your custom entities, and follow the pattern provided for the
-built-in user authentication documentation.
-
-Scripts are included in [`curl-scripts`](curl-scripts) to test built-in actions. Feel free to use Postman for testing, using the curl scripts listed below and in the folder for setting up headers and request bodies.
-Add your own scripts to test your custom API.
-
-### Authentication
-
-| Verb   | URI Pattern            | Controller#Action |
-|--------|------------------------|-------------------|
-| POST   | `/sign-up`             | `users#signup`    |
-| POST   | `/sign-in`             | `users#signin`    |
-| PATCH  | `/change-password/` | `users#changepw`  |
-| DELETE | `/sign-out/`        | `users#signout`   |
+![Screen Shot 2021-12-17 at 11 18 57 AM](https://user-images.githubusercontent.com/78924263/146575483-84df2cc5-37ed-428e-84bc-8617d86156b9.png)
 
 #### POST /sign-up
 
