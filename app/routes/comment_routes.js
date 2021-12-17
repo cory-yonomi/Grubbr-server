@@ -12,6 +12,7 @@ const BadParamsError = errors.BadParamsError
 const BadCredentialsError = errors.BadCredentialsError
 const Restaurant = require('../models/restaurant')
 const Comment = require('../models/comment')
+// const mongoose = require('mongoose')
 
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
@@ -50,9 +51,7 @@ router.get('/comments/:restaurantId/:commentId', requireToken, (req, res, next) 
 // POST /comments/<restaurant.id>
 router.post('/comments/:restaurantId', requireToken, (req, res, next) => {
     // find the restaurant in database
-    Restaurant.findOne({
-        id: req.params.restaurantId
-    })
+    Restaurant.findById(req.body.restaurant._id)
         .then(restaurant => {
             console.log('found restaurant for comment:\n', restaurant)
             // add (push) comment into the restaurant's comments array
