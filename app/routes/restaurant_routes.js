@@ -78,6 +78,15 @@ router.get('/restaurants', requireToken, (req, res, next) => {
     .catch(next)
 })
 
+// show all restaurants
+router.get('/restaurants/:restaurantId', requireToken, (req, res, next) => {
+    Restaurant.find({_id: req.params.restaurantId})
+        .then(rest => {
+        res.json(rest)
+        })
+    .catch(next)
+})
+
 // create a restaurant if it doesn't already exist
 router.post('/restaurants', requireToken, (req, res, next) => {
     // finds one restaurant by it's yelp id
