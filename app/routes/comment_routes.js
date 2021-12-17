@@ -50,10 +50,13 @@ router.get('/comments/:restaurantId/:commentId', requireToken, (req, res, next) 
 // POST /comments/<restaurant.id>
 router.post('/comments/:restaurantId', requireToken, (req, res, next) => {
     // find the restaurant in database
-    Restaurant.findById(req.params.restaurantId)
+    Restaurant.findOne({
+        id: req.params.restaurantId
+    })
         .then(restaurant => {
+            console.log('found restaurant for comment:\n', restaurant)
             // add (push) comment into the restaurant's comments array
-            restaurant.comments.push(req.body.comment)
+            restaurant.comments.push({ comment: req.body.comment })
             // then save the restaurant
             return restaurant.save()
         })
