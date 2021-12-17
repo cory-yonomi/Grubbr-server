@@ -22,6 +22,9 @@ Well, have you ever been with a partner/friend and you get into an argument beca
 
 ## Grubbr Routes
 
+![Grubber Routes](https://s12.aconvert.com/convert/p3r68-cdx67/tichk-7ucsp.png)
+
+
 
 
 # Authentication
