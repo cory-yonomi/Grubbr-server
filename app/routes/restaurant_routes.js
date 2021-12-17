@@ -12,7 +12,9 @@ const axios = require('axios')
 const BadParamsError = errors.BadParamsError
 const BadCredentialsError = errors.BadCredentialsError
 const Restaurant = require('../models/restaurant')
+const Profile = require('../models/profile')
 const User = require('../models/user')
+const mongoose = require('mongoose')
 
 
 // passing this as a second argument to `router.<verb>` will make it
@@ -78,7 +80,7 @@ router.get('/restaurants', requireToken, (req, res, next) => {
     .catch(next)
 })
 
-// show all restaurants
+// show one restaurant
 router.get('/restaurants/:restaurantId', requireToken, (req, res, next) => {
     Restaurant.find({_id: req.params.restaurantId})
         .then(rest => {
@@ -120,7 +122,21 @@ router.post('/restaurants', requireToken, (req, res, next) => {
                     users: [req.user._id]
                 })
             }
-    }).then(restaurant => res.status(200).json(restaurant))
+        })
+        .then(restaurant => {
+            console.log('restaurant likers:', restaurant.users)
+            let objectifiedUsers = restaurant.users.map(user => {
+                return user
+            })
+            Profile.find({
+                userId: { $in: objectifiedUsers }
+            })
+                .then(usersArray => {
+                console.log(usersArray)
+                return { restaurant: restaurant, usersArray: usersArray}
+            })
+            .then(data => res.status(200).json(data))
+        })
     .catch(next)
 })
 
