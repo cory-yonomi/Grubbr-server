@@ -55,7 +55,7 @@ router.post('/comments/:restaurantId', requireToken, (req, res, next) => {
         .then(restaurant => {
             console.log('found restaurant for comment:\n', restaurant)
             // add (push) comment into the restaurant's comments array
-            restaurant.comments.push({ comment: req.body.comment })
+            restaurant.comments.push(req.body.comment)
             // then save the restaurant
             return restaurant.save()
         })
