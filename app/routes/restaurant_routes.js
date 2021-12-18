@@ -94,7 +94,7 @@ router.post('/restaurants', requireToken, (req, res, next) => {
     // finds one restaurant by it's yelp id
     Restaurant.findOne({
         yelpId: req.body.yelpId,
-    })
+    }).populate('comments')
         .then(resp => {
             // if it already exists in the grubbr db
             if (resp) {
