@@ -70,14 +70,17 @@ router.post('/comments/:restaurantId', requireToken, (req, res, next) => {
 //DELETE
 //DELETE /comments/<restaurant.id>/<comment.id>
 router.delete('/comments/:restaurantId/:commentId', requireToken, (req, res, next) => {
-    Restaurant.findById(req.params.restaurantId)
+    Restaurant.find({"comments._id": {$eq: req.params.commentId}})
         // .then(handle404)
         .then(restaurant => {
-            let commentIndex = restaurant.comments.indexOf(req.params.commentId)
-            restaurant.comments.splice(commentIndex, 1)
-            return restaurant.save()
+            console.log('rest', restaurant)
+            // let commId = req.params.commentId
+            // let commentIndex = restaurant.comments.indexOf({commId})
+            // console.log('comm index', commentIndex)
+            // restaurant.comments.splice(commentIndex, 1)
+            // return restaurant.save()
         })
-        .then(restaurant => {
+        .then(comment => {
             res.sendStatus(204)
         })
         .catch(next)
