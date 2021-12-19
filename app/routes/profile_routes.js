@@ -25,7 +25,15 @@ const handle404 = customErrors.handle404
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
-// READ ALL users profile
+// GET ALL user profiles
+router.get('/profile', requireToken, (req, res, next) => {
+    Profile.find()
+        .then(foundProfiles => {
+        res.json(foundProfiles)
+        })
+    .catch(next)
+})
+
 router.get('/profile/restaurantLikers', requireToken, (req, res, next) => {
     Profile.find({
         _id: {$in: req.body.userIds}
