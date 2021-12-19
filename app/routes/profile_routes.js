@@ -40,6 +40,7 @@ router.get('/profile/restaurantLikers', requireToken, (req, res, next) => {
     })
         .then(handle404)
         .then(foundUsers => {
+        console.log('found', foundUsers)
         res.json(foundUsers)
         })
     .catch(err => console.log(err))
@@ -56,6 +57,10 @@ router.get('/profile/:userId', requireToken, (req, res, next) => {
         })
     .catch(err => console.log(err))
 })
+
+// profile.create to create profile
+// user.findAndUpdate
+// return created profile
 
 // CREATE user's profile
 router.post('/profile', requireToken, (req, res, next) => {
