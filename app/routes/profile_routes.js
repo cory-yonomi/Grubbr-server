@@ -47,9 +47,9 @@ router.get('/profile/restaurantLikers', requireToken, (req, res, next) => {
 })
 
 // READ ONE users profile
-router.get('/profile/:profileId', requireToken, (req, res, next) => {
+router.get('/profile/:userId', requireToken, (req, res, next) => {
     Profile.findOne({
-        _id: req.params.profileId
+        userId: req.params.userId
     }).populate('pendingMatches').populate('matchedUsers')
         .then(handle404)
         .then(foundProfile => {

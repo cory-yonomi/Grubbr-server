@@ -79,9 +79,7 @@ router.delete('/comments/:restaurantId/:commentId', requireToken, (req, res, nex
             // console.log('comm index', commentIndex)
             // restaurant.comments.splice(commentIndex, 1)
             // return restaurant.save()
-        })
-        .then(comment => {
-            res.sendStatus(204)
+            res.json(restaurant)
         })
         .catch(next)
 })
