@@ -27,6 +27,7 @@ const removeBlanks = require('../../lib/remove_blank_fields')
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
+// CREATE a new message in user's array
 router.post('/messages/:profileId', requireToken, (req, res, next) => {
     Profile.findById(req.params.profileId)
         .then(foundProfile => {

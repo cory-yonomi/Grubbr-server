@@ -25,7 +25,7 @@ const requireToken = passport.authenticate('bearer', { session: false })
 
 const removeBlanks = require('../../lib/remove_blank_fields')
 
-
+// CREATE a pending match in a user's array
 router.post('/pendingMatches/:profileId', requireToken, (req, res, next) => {
     Profile.findById(req.params.profileId)
         .then(foundProfile => {
