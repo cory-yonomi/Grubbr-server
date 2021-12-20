@@ -53,7 +53,7 @@ router.post('/comments/:restaurantId', requireToken, (req, res, next) => {
     // find the restaurant in database
     Restaurant.findById(req.body.restaurant._id)
         .then(restaurant => {
-            console.log('found restaurant for comment:\n', restaurant)
+            // console.log('found restaurant for comment:\n', restaurant)
             // add (push) comment into the restaurant's comments array
             restaurant.comments.push(req.body.comment)
             // then save the restaurant
@@ -81,7 +81,11 @@ router.delete('/comments/:restaurantId/:commentId', requireToken, (req, res, nex
             restaurant.comments.splice(restaurant.comments.indexOf(comment), 1)
             return restaurant.save()
         })
-        .then(() => res.sendStatus(204))
+        .then(info => {
+            console.log('info after delete', info)
+            res.status(201).json(info)
+        })
+        // .then(() => res.sendStatus(204))
         .catch(next)
 })
 
