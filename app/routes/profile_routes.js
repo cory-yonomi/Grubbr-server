@@ -47,10 +47,10 @@ router.get('/profile/restaurantLikers', requireToken, (req, res, next) => {
 })
 
 // READ ONE users profile
-router.get('/profile/:userId', requireToken, (req, res, next) => {
+router.get('/profile/:profileId', requireToken, (req, res, next) => {
     Profile.findOne({
-        userId: req.params.userId
-    })
+        _id: req.params.profileId
+    }).populate('pendingMatches').populate('matchedUsers')
         .then(handle404)
         .then(foundProfile => {
         res.json(foundProfile)
@@ -94,7 +94,7 @@ router.patch('/profile/:userId', requireToken, removeBlanks, (req, res, next) =>
     .catch(next)
 })
 
-// EDIT edit user's liked restaurants
+// EDIT user's liked restaurants
 router.patch('/profile/:userId/liked', requireToken, (req, res, next) => {
     Profile.findOne({
         userId: req.user._id
