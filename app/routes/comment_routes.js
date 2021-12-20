@@ -68,22 +68,34 @@ router.post('/comments/:restaurantId', requireToken, (req, res, next) => {
 })
 
 //DELETE
-//DELETE /comments/<restaurant.id>/<comment.id>
+// DELETE /comments/<restaurant.id>/<comment.id>
 router.delete('/comments/:restaurantId/:commentId', requireToken, (req, res, next) => {
-    Restaurant.find({"comments._id": {$eq: req.params.commentId}})
-        // .then(handle404)
+    Restaurant.findById(req.params.restaurantId)
         .then(restaurant => {
-            console.log('rest', restaurant)
-            // let commId = req.params.commentId
-            // let commentIndex = restaurant.comments.indexOf({commId})
-            // console.log('comm index', commentIndex)
-            // restaurant.comments.splice(commentIndex, 1)
-            // return restaurant.save()
+            let comment = restaurant.comments.find(comment => {
+                // console.log('comment id current', comment._id.toString())
+                return comment._id.toString() === req.params.commentId.toString()
+            })
+            // console.log('req.params', req.params.commentId)
+            // console.log('comment I want to delete', comment)
+            restaurant.comments.splice(restaurant.comments.indexOf(comment), 1)
+            return restaurant.save()
         })
-        .then(comment => {
-            res.sendStatus(204)
-        })
+        .then(() => res.sendStatus(204))
         .catch(next)
 })
+
+// router.delete('/comments/:restaurantId/:commentId', requireToken, (req, res, next) => {
+//     Restaurant.findById(req.params.restaurantId)
+//     .then(restaurant => {
+//         // console.log('comment!', restaurant.comments.id(req.params.commentId))
+//         return restaurant.comments.id(req.params.commentId)
+//     })
+//     .then(comment => {
+//         // console.log('comment found', comment)
+//     })
+//     .then(() => res.sendStatus(204))
+//     .catch(next)
+// })
 
 module.exports = router
