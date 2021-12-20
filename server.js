@@ -13,6 +13,8 @@ const userRoutes = require('./app/routes/user_routes')
 const profileRoutes = require('./app/routes/profile_routes')
 const restaurantRoutes = require('./app/routes/restaurant_routes')
 const commentRoutes = require('./app/routes/comment_routes')
+const messageRoutes = require('./app/routes/message_routes')
+const matchRoutes = require('./app/routes/match_routes')
 
 // require middleware
 const errorHandler = require('./lib/error_handler')
@@ -77,7 +79,8 @@ app.use(userRoutes)
 app.use(profileRoutes)
 app.use(restaurantRoutes)
 app.use(commentRoutes)
-
+app.use(messageRoutes)
+app.use(matchRoutes)
 // register error handling middleware
 // note that this comes after the route middlewares, because it needs to be
 // passed any error messages from them

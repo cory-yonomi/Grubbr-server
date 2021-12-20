@@ -5,12 +5,12 @@ const Schema = mongoose.Schema
 const commentSchema = new Schema(
     {
         body: String,
-        profile: {
+        senderProfile: {
             // to create a reference, the type should be ObjectId
             type: Schema.Types.ObjectId,
             // ref is also needed, so we can populate the owner
             // Note: populate means replacing the owner id with the Person document
-            ref: 'profile'
+            ref: 'Profile'
         }
     },
     {
